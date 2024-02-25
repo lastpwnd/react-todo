@@ -5,6 +5,17 @@
   text-align: center;
 }
 
+ul {
+  display: flex;
+  flex-direction: column;
+  list-style-type: circle;
+  align-items: start;
+}
+
+li {
+  font-size: 125%;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
