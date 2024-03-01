@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import toDoList from './toDoList'
+import ToDoList from './ToDoList'
 import AddToDoForm from './AddToDoForm'
 
 function App() {
@@ -8,9 +8,7 @@ function App() {
     <div>
       <h1> Todo List </h1>
       <AddToDoForm />
-      <ul>
-        {toDoList()}
-      </ul>
+      <ul> <ToDoList /> </ul>
     </div>
   )
 }

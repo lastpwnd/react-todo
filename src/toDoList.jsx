@@ -7,7 +7,7 @@ const toDoListArray = [
     { id: 4, title: "Submit results" }]
   
 
-const toDoList = () => (
+const ToDoList = () => (
         toDoListArray.map(e => {
             return (
               <li key = {e.id}> {e.title} </li>
@@ -16,4 +16,4 @@ const toDoList = () => (
   )
 
 
-export default toDoList
+export default ToDoList
