@@ -12,6 +12,17 @@ ul {
   align-items: start;
 }
 
+#toDoForm {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+label {
+  align-self: center;
+  font-size: 125%;
+}
+
 li {
   font-size: 125%;
 }
