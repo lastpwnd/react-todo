@@ -1,4 +1,4 @@
-import React from 'react'
+import ToDoListItem from './ToDoListItem'
 
 const toDoListArray = [
     { id: 1, title: "Check learning objectives" }, 
@@ -9,11 +9,10 @@ const toDoListArray = [
 
 const ToDoList = () => (
         toDoListArray.map(e => {
-            return (
-              <li key = {e.id}> {e.title} </li>
+            return (            
+              <ToDoListItem key={e.id} innerText={e.title} />
             )
           })
-  )
-
+)
 
 export default ToDoList
