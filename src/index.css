@@ -46,6 +46,15 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
+.remove-button
+{
+  background-color: #444;
+  color: rgb(255, 0, 0);
+  padding: 10px;
+  scale: 0.5;
+}
+
 button:hover {
   border-color: #646cff;
 }

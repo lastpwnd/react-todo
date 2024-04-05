@@ -10,15 +10,9 @@ export const toDoListArray = [
 const ToDoList = (props) => {
   return props.toDoList.map(e => {
     return(
-      <ToDoListItem key={e.id} innerText={e.title} />
+      <ToDoListItem onRemoveToDo={props.onRemoveToDo} id={e.id} key={e.id} innerText={e.title} />
     )
   })
-  
-  // toDoListArray.map(e => {
-  //   return (            
-  //     <ToDoListItem key={e.id} innerText={e.title} />
-  //   )
-  // })s
 }
 
 export default ToDoList
