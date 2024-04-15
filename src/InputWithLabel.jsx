@@ -7,7 +7,6 @@ export const InputWithLabel = (props) => {
        inputRef.current.focus() 
     })
 
-
   return (
     <>
         <label htmlFor='toDoTitle'> {props.children} </label> 
