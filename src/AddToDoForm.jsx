@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import InputWithLabel from './InputWithLabel'
 
 const AddToDoForm = (props) => {
 
@@ -10,7 +11,6 @@ function handleTitleChange(event) {
     setToDoTitle(newToDoTitle)
   }
   
-
 function handleAddTodo(event) 
   {
     event.preventDefault()
@@ -22,19 +22,16 @@ function handleAddTodo(event)
     setToDoTitle("")
   }
   
-
   return (
    <div>
         <form id="toDoForm" onSubmit={handleAddTodo}> 
-            <label htmlFor='toDoTitle'> Title </label> 
-            <input id='toDoTitle' name='title' value={toDoTitle} onChange={handleTitleChange}/>  
+            <InputWithLabel toDoTitle = {toDoTitle} handleTitleChange={handleTitleChange}> 
+              Title
+            </InputWithLabel> 
             <button type='submit'> Add </button>
         </form>
    </div>
   )     
 }
-
-
-
 
 export default AddToDoForm
