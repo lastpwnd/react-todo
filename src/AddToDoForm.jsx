@@ -14,11 +14,7 @@ function handleTitleChange(event) {
 function handleAddTodo(event) 
   {
     event.preventDefault()
-    // const toDoTitle = event.target.title.value
-    // console.log(toDoTitle)
-    //props.onAddToDo(toDoTitle)
     props.onAddToDo({id: Date.now(), title: toDoTitle})
-    //document.getElementById("toDoForm").reset()
     setToDoTitle("")
   }
   
@@ -26,7 +22,7 @@ function handleAddTodo(event)
    <div>
         <form id="toDoForm" onSubmit={handleAddTodo}> 
             <InputWithLabel toDoTitle = {toDoTitle} handleTitleChange={handleTitleChange}> 
-              Title
+             Title
             </InputWithLabel> 
             <button type='submit'> Add </button>
         </form>
