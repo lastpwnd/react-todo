@@ -1,14 +1,15 @@
 import React from 'react'
 import '../App.css'
 import { Link } from "react-router-dom"
+import localStyle from "./pages.module.css"
 
-const NewToDoList = () => {
+const NewToDoListPage = () => {
     return (
-        <>
-            <h1>New To Do List <br/>
-            <Link to="/"> Main Page </Link></h1>
-        </>
+        <div className={localStyle.newToDoListPageHeader}>
+            New To Do List <br />
+            <Link to="/"> return to main page </Link>
+        </div>
     )
 }
 
-export default NewToDoList
+export default NewToDoListPage
