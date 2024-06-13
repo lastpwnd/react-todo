@@ -1,4 +1,5 @@
 import ToDoListItem from './ToDoListItem'
+import PropTypes from 'prop-types'
 
 export const toDoListArray = [
     { id: 1, title: "Check learning objectives" }, 
@@ -14,5 +15,13 @@ const ToDoList = (props) => {
     )
   })
 }
+
+
+ToDoListItem.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  innerText: PropTypes.string,
+  onRemoveToDo: PropTypes.func
+}
+
 
 export default ToDoList

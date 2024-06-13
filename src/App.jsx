@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import MyRouter from './MyRouter'
+import MyRouter from './components/MyRouter'
 import { BrowserRouter } from "react-router-dom"
 
 function App() {

@@ -1,7 +1,7 @@
 import React from 'react'
 import '../App.css'
-import ToDoList from "../ToDoList"
-import AddToDoForm from "../AddToDoForm"
+import ToDoList from "../components/ToDoList"
+import AddToDoForm from "../components/AddToDoForm"
 import { useState, useEffect } from 'react'
 
 const IndexPage = () => {
