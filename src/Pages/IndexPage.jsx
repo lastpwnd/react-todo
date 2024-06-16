@@ -2,7 +2,9 @@ import React from 'react'
 import '../App.css'
 import ToDoList from "../components/ToDoList"
 import AddToDoForm from "../components/AddToDoForm"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
+
+
 
 const IndexPage = () => {
  
@@ -11,10 +13,69 @@ const IndexPage = () => {
   if (!storageData) {
     storageData = [] // to avoid sending null to the state 
   }
+  
+  const initialSortState = { method:"titleSort", value: 0 }
+
+  let storageData2 = JSON.parse(localStorage.getItem("sortingState"))
+  if (!storageData2) {
+    storageData2 = initialSortState // to avoid sending null to the state 
+  }
+
+function reducer(state, action) {
+    switch (action.type) {
+      case 'titleSort':
+        {
+          
+          if (sortList == 1) {
+            setSortList(-1)
+            return {
+              method: "titleSort",
+              value: -1
+            }
+          }
+          else {
+            setSortList(1)
+            return {
+              method: "titleSort",
+              value: 1
+            }
+          }
+
+        }
+      case 'dateSort':
+        {
+          
+          if (dateSortList == 1) {
+            setDateSortList(-1)
+            return {
+              method: "dateSort",
+              value: -1
+            }
+          }
+          else {
+            setDateSortList(1)
+            return {
+              method: "dateSort",
+              value: 1
+            }
+          }
+        }
+    }
+  }
+  
+
 
 const [toDoList, setToDoList] = useState([])
 const [isLoading, setIsLoading] = useState(true)
+//sorting methods states
+const [sortList, setSortList] = useState(0) 
+const [dateSortList, setDateSortList] = useState(1)
+const [state, dispatch] = useReducer(reducer, storageData2) 
+//sorting button names states
+const [sortButtonName, setSortButtonName] = useState("Sort by Title") //
+const [dateSortButtonName, setDateSortButtonName] = useState("Older First")
 
+// const URL = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?view=Grid%20view&sort[0][field]=title&sort[0][direction]=asc`
 const URL = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`
 
 async function readData() {
@@ -36,12 +97,49 @@ async function readData() {
     const todos = receivedData.records.map((e) => {
       const newToDo = {
         id: e.id,
-        title: e.fields.title
+        title: e.fields.title,
+        createdAt: e.fields.createdAt
       }
       return newToDo
     })
-   
-    setToDoList(todos)
+
+    const sortedData = todos.sort((a,b) => {
+    
+      let dataA, dataB
+
+      if (state.method == "titleSort" && state.value == -1) {
+        dataA = a.title.toUpperCase()
+        dataB = b.title.toUpperCase()
+        setSortButtonName("Ascending")
+        setDateSortButtonName("Sort by Date")
+      }
+      if (state.method == "titleSort" && state.value == 1)
+        {
+          dataA = b.title.toUpperCase()
+          dataB = a.title.toUpperCase()
+          setSortButtonName("Descending")
+          setDateSortButtonName("Sort by Date")
+        } 
+      if (state.method == "dateSort" && state.value == 1) {
+        dataA = a.createdAt
+        dataB = b.createdAt
+        setDateSortButtonName("Older First")
+        setSortButtonName("Sort by Title")
+      }
+      if (state.method == "dateSort" && state.value == -1)
+        {
+          dataA = b.createdAt
+          dataB = a.createdAt
+          setDateSortButtonName("Newer First")
+          setSortButtonName("Sort by Title")
+        }
+        
+        if (dataA > dataB)  return 1
+        else if (dataA < dataB) return -1
+        else return 0 
+      }) 
+
+    setToDoList(sortedData)
     setIsLoading(false)
 
     //return receivedData.records
@@ -49,13 +147,12 @@ async function readData() {
   } catch (error) {
     console.log(error.status, error.message)
   }
-
 }
 
 
 async function writeData(input) {
 
-      const airtableData = {fields:{title:`${input.title}`}}
+      const airtableData = {fields:{title:`${input.title}`, createdAt:`${input.createdAt}`}}
       const options = {
         method: "POST",
         headers: {
@@ -81,29 +178,16 @@ async function writeData(input) {
 }
 
 useEffect( () => {
-  //async immitation with delay
-
-  // const promise1 = new Promise ((resolve, reject) => {
-  //   setTimeout( () => {
-  //     resolve({data:{toDoList: storageData}
-  //     })
-  //   }, 2000)
-  // }).then((result) => {
-  //   setToDoList(result.data.toDoList)
-  //   setIsLoading(false)
-  // })
-
- readData()
- //.then(records => console.log(records))
- 
-}, [])
+    readData() 
+}, [sortList, dateSortList])
 
 //push data into LS
 useEffect(() => {
   if (!isLoading) {
     localStorage.setItem("savedToDoList", JSON.stringify(toDoList))
   } 
-}, [toDoList])
+    localStorage.setItem("sortingState",  JSON.stringify(state))
+}, [toDoList, state])
 
 
 // add func
@@ -120,7 +204,7 @@ function removeToDo(id) {
   setToDoList(filteredList)
 }
 
-    return (
+return (
         <>
             <h1> Todo List </h1>
             <AddToDoForm onAddToDo={addToDo} />
@@ -130,6 +214,9 @@ function removeToDo(id) {
                     : <ToDoList onRemoveToDo={removeToDo} toDoList={toDoList} />
                 }
             </ul>
+            <br/>
+            <button onClick={() => {dispatch({type: "titleSort"})}}> {sortButtonName}</button>
+            <button onClick={() => {dispatch({type: "dateSort"})}}> {dateSortButtonName}</button>
         </>
     )
 }

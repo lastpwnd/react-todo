@@ -49,10 +49,19 @@ button {
 
 .remove-button
 {
+  padding: auto;
   background-color: #444;
   color: rgb(255, 0, 0);
-  padding: 10px;
+  font-size:40px;
+  font-weight: bold;
+  padding: 10px 20px;
   scale: 0.5;
+}
+
+.remove-button:hover
+{
+  color: #444;
+  background-color: rgb(255, 0, 0);
 }
 
 button:hover {

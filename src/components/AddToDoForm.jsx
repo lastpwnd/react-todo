@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 const AddToDoForm = (props) => {
 
   const [toDoTitle, setToDoTitle] = useState("")
+  const nowDate = new window.Date()
+  let creationDate = nowDate.toISOString()
 
 function handleTitleChange(event) {
     const newToDoTitle = event.target.value
@@ -15,7 +17,8 @@ function handleTitleChange(event) {
 function handleAddTodo(event) 
   {
     event.preventDefault()
-    props.onAddToDo({id: Date.now(), title: toDoTitle})
+    // props.onAddToDo({id: Date.now(), title: toDoTitle, createdAt: props.createdAt})
+    props.onAddToDo({id: Date.now(), title: toDoTitle, createdAt: creationDate})
     setToDoTitle("")
   }
   
