@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import InputWithLabel from './InputWithLabel'
+import PropTypes from 'prop-types'
 
 const AddToDoForm = (props) => {
 
@@ -28,6 +29,10 @@ function handleAddTodo(event)
         </form>
    </div>
   )     
+}
+
+AddToDoForm.propTypes = {
+  onAddToDo: PropTypes.func
 }
 
 export default AddToDoForm

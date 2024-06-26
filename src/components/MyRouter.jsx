@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate } from "react-router-dom"
-import { allRoutes } from "../src/routes"
+import { allRoutes } from "./routes"
 
 const MyRouter = () => {
     return (
